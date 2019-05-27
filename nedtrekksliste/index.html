@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Nedtrekksliste</title>
+</head>
+<body>
+
+    <button onclick="nyeValg()">Bytt valgmuligheter</button>
+    <select id="nedtrekk" onchange="prosesserVerdi()">
+        <option value="1">Verdi 1</option>
+        <option value="2">Verdi 2</option>
+        <option value="3">Verdi 3</option>
+    </select>
+
+    <div id="main"></div>
+
+    <div id="tekst1"><h1>Her står det noe tekst</h1></div>
+    <div id="tekst2"><h1>Noe annen tekst</h1></div>
+
+    <script>
+        let nedtrekk = document.getElementById("nedtrekk");
+        let counter = 0;
+
+        document.getElementById("tekst2").style.display = "none";
+
+        function prosesserVerdi() {
+            //Oppdaterer innholdet på siden
+            nyttSideInnhold();
+
+            //Bytter innholdet som vises
+            byttInnholdSomVises();
+
+            //Lager en alert med den hentede verdien
+            alert(hentVerdi());
+        }
+
+        function hentVerdi() {
+            //Denne funksjonen returnerer verdien til nedtrekksfeltet
+            return nedtrekk.value;
+        }
+
+        function nyeValg() {
+            //Skifter verdiene du har i nedtrekk.
+            let html = "<option value='nyVerdi 1'>Ny verdi 1</option>";
+            html += "<option value='nyVerdi 2'>Ny verdi 2</option>";
+            html += "<option value='nyVerdi 3'>Ny verdi 3</option>";
+
+            //Setter de nye valgmulighetene
+            nedtrekk.innerHTML = html;
+        }
+
+        function nyttSideInnhold(){
+            //Definerer nytt innhold på siden.
+            counter++;
+            let main = document.getElementById("main");
+            main.innerHTML = `<h1>Her står det noe informasjon, dette har blitt oppdatert ${counter}, nåværende verdi er ${hentVerdi()}</h1>`
+        }
+
+        function byttInnholdSomVises() {
+            //Henter elementet
+            let tekst1 = document.getElementById("tekst1");
+            let tekst2 = document.getElementById("tekst2");
+
+            //Henter stilen som er utregnet
+            let tekst1Display = window.getComputedStyle(tekst1, null).display;
+            let tekst2Display = window.getComputedStyle(tekst2, null).display;
+
+            //Sjekker om stilen er block
+            if(tekst1Display == "block"){
+                //Hvis block, sett til none = usynlig
+                tekst1.style.display = "none";
+            }
+            else{
+                //Hvis ikke sett til block
+                tekst1.style.display = "block"
+            }
+
+            if(tekst2Display == "block"){
+                tekst2.style.display = "none"
+            }
+            else{
+                tekst2.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
